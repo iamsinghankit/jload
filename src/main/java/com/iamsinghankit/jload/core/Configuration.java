@@ -15,7 +15,7 @@ public record Configuration(int port, boolean debug, int retry, List<Host> hosts
         boolean debug = false, help = false, versionRequested = false;
         var hosts = List.of(new Host("localhost", 9090));
         String version = "JLoad v" + Configuration.class.getPackage().getImplementationVersion();
-        AlgoType algoType = AlgoType.ROUND;
+        AlgoType algoType = AlgoType.ROUND_ROBIN;
 
         for (String arg : args) {
             String[] params = arg.split("=");

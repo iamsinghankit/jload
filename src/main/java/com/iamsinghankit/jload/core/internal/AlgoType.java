@@ -9,7 +9,7 @@ import java.util.function.Function;
  * @author Ankit Singh
  */
 public enum AlgoType {
-    ROUND(new Lazy(RoundRobinLoadBalancer::new)),
+    ROUND_ROBIN(new Lazy(RoundRobinLoadBalancer::new)),
     RANDOM(new Lazy(RandomLoadBalancer::new)),
     LEAST_CONNECTION(new Lazy(LeastConnectionLoadBalancer::new));
 
@@ -21,7 +21,7 @@ public enum AlgoType {
 
     public static AlgoType of(String value) {
         return switch (value) {
-            case "round" -> ROUND;
+            case "round_robin" -> ROUND_ROBIN;
             case "random" -> RANDOM;
             case "least_connection" -> LEAST_CONNECTION;
             default -> throw new JLoadException("Invalid parameter value: " + value);

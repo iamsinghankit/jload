@@ -25,8 +25,8 @@ public class JLoadApp {
                            value will be ignored.
                            default=localhost:9090
             --algo=,-a=    select algorithm for load balancing,
-                           possible values:[round,random,least_connection].
-                           default=round
+                           possible values:[round_robin,random,least_connection].
+                           default=round_robin
             --help,-h      print this help message.
             --version,-v   print current version.
             """;
