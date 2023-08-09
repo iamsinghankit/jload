@@ -1,5 +1,6 @@
 package com.iamsinghankit.jload.core.internal;
 
+import com.iamsinghankit.jload.core.Configuration;
 import com.iamsinghankit.jload.core.Configuration.Host;
 
 import java.util.List;
@@ -12,9 +13,9 @@ class LeastConnectionLoadBalancer extends AbstractLoadBalancer {
     private final List<Host> hosts;
     private final ConcurrentHashMap<Host, Long> hostCache;
 
-    LeastConnectionLoadBalancer(List<Host> hosts, int retry) {
-        super(retry);
-        this.hosts = hosts;
+    LeastConnectionLoadBalancer(Configuration config) {
+        super(config.retry());
+        this.hosts = config.hosts();
         this.hostCache = new ConcurrentHashMap<>(hosts.size() + 2);
         populateCache();
     }

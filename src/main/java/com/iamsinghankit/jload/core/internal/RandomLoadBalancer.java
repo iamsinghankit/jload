@@ -1,5 +1,6 @@
 package com.iamsinghankit.jload.core.internal;
 
+import com.iamsinghankit.jload.core.Configuration;
 import com.iamsinghankit.jload.core.Configuration.Host;
 
 import java.util.List;
@@ -12,9 +13,9 @@ import java.util.Random;
     private final List<Host> hosts;
     private final Random random;
 
-    RandomLoadBalancer(List<Host> hosts, int retry) {
-        super(retry);
-        this.hosts = hosts;
+    RandomLoadBalancer(Configuration config) {
+        super(config.retry());
+        this.hosts = config.hosts();
         this.random = new Random();
     }
 

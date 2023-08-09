@@ -1,5 +1,6 @@
 package com.iamsinghankit.jload.core.internal;
 
+import com.iamsinghankit.jload.core.Configuration;
 import com.iamsinghankit.jload.core.Configuration.Host;
 
 import java.util.List;
@@ -13,9 +14,9 @@ class RoundRobinLoadBalancer extends AbstractLoadBalancer {
     private final List<Host> hosts;
     private final AtomicInteger count;
 
-    RoundRobinLoadBalancer(List<Host> hosts, int retry) {
-        super(retry);
-        this.hosts = hosts;
+    RoundRobinLoadBalancer(Configuration config) {
+        super(config.retry());
+        this.hosts = config.hosts();
         this.count = new AtomicInteger(0);
     }
 

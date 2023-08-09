@@ -9,9 +9,9 @@ import java.util.function.Function;
  * @author Ankit Singh
  */
 public enum AlgoType {
-    ROUND(new Lazy(c -> new RoundRobinLoadBalancer(c.hosts(), c.retry()))),
-    RANDOM(new Lazy(c -> new RandomLoadBalancer(c.hosts(), c.retry()))),
-    LEAST_CONNECTION(new Lazy(c -> new LeastConnectionLoadBalancer(c.hosts(), c.retry())));
+    ROUND(new Lazy(RoundRobinLoadBalancer::new)),
+    RANDOM(new Lazy(RandomLoadBalancer::new)),
+    LEAST_CONNECTION(new Lazy(LeastConnectionLoadBalancer::new));
 
     private final Lazy lazyLoadBalancer;
 
