@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.HexFormat;
 
-import static com.iamsinghankit.jload.core.Configuration.INSTANCE;
 import static java.lang.Thread.startVirtualThread;
 
 /**
@@ -19,6 +18,7 @@ class SimpleClientHandler implements ClientHandler {
     private final Socket socket;
     private final String id;
     private final LoadBalancer loadBalancer;
+    private Socket host;
 
     public SimpleClientHandler(AlgoType algoType, Socket socket) {
         this.loadBalancer = algoType.loadBalancer();
@@ -36,7 +36,7 @@ class SimpleClientHandler implements ClientHandler {
         try {
             InputStream input = socket.getInputStream();
             OutputStream output = socket.getOutputStream();
-            Socket host = loadBalancer.nextHost();
+            host = loadBalancer.nextHost();
             Log.info("[%s] Forwarding request to: %s ", id, socket.toString());
             var hostInput = host.getInputStream();
             var hostOutput = host.getOutputStream();
@@ -70,5 +70,7 @@ class SimpleClientHandler implements ClientHandler {
     @Override
     public void close() throws IOException {
         socket.close();
+        if (host != null)
+            host.close();
     }
 }
