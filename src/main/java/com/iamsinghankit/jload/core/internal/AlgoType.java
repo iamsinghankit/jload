@@ -1,18 +1,17 @@
 package com.iamsinghankit.jload.core.internal;
 
 import com.iamsinghankit.jload.JLoadException;
+import com.iamsinghankit.jload.core.Configuration;
 
-import java.util.function.Supplier;
-
-import static com.iamsinghankit.jload.core.Configuration.INSTANCE;
+import java.util.function.Function;
 
 /**
  * @author Ankit Singh
  */
 public enum AlgoType {
-    ROUND(new Lazy(() -> new RoundRobinLoadBalancer(INSTANCE.hosts(), INSTANCE.retry()))),
-    RANDOM(new Lazy(() -> new RandomLoadBalancer(INSTANCE.hosts(), INSTANCE.retry()))),
-    LEAST_CONNECTION(new Lazy(() -> new LeastConnectionLoadBalancer(INSTANCE.hosts(), INSTANCE.retry())));
+    ROUND(new Lazy(c -> new RoundRobinLoadBalancer(c.hosts(), c.retry()))),
+    RANDOM(new Lazy(c -> new RandomLoadBalancer(c.hosts(), c.retry()))),
+    LEAST_CONNECTION(new Lazy(c -> new LeastConnectionLoadBalancer(c.hosts(), c.retry())));
 
     private final Lazy lazyLoadBalancer;
 
@@ -24,26 +23,26 @@ public enum AlgoType {
         return switch (value) {
             case "round" -> ROUND;
             case "random" -> RANDOM;
-            case "least_connection"-> LEAST_CONNECTION;
+            case "least_connection" -> LEAST_CONNECTION;
             default -> throw new JLoadException("Invalid parameter value: " + value);
         };
     }
 
-    public LoadBalancer loadBalancer() {
-        return lazyLoadBalancer.get();
+    public LoadBalancer loadBalancer(Configuration config) {
+        return lazyLoadBalancer.get(config);
     }
 
     private static class Lazy {
-        Supplier<LoadBalancer> supplier;
+        Function<Configuration, LoadBalancer> func;
         LoadBalancer loadBalancer;
 
-        Lazy(Supplier<LoadBalancer> supplier) {
-            this.supplier = supplier;
+        Lazy(Function<Configuration, LoadBalancer> func) {
+            this.func = func;
         }
 
-        public LoadBalancer get() {
+        public LoadBalancer get(Configuration configuration) {
             if (loadBalancer == null) {
-                loadBalancer = supplier.get();
+                loadBalancer = func.apply(configuration);
             }
             return loadBalancer;
         }

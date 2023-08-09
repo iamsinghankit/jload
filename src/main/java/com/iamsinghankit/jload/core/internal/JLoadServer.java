@@ -1,6 +1,7 @@
 package com.iamsinghankit.jload.core.internal;
 
 import com.iamsinghankit.jload.core.ClientHandler;
+import com.iamsinghankit.jload.core.Configuration;
 import com.iamsinghankit.jload.core.Server;
 import com.iamsinghankit.jload.logger.Log;
 
@@ -8,7 +9,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import static com.iamsinghankit.jload.core.Configuration.INSTANCE;
 import static java.lang.String.valueOf;
 import static java.lang.Thread.startVirtualThread;
 
@@ -18,11 +18,11 @@ import static java.lang.Thread.startVirtualThread;
 public class JLoadServer implements Server {
 
 
-    private final int port;
+    private final Configuration config;
     private volatile boolean running;
 
-    public JLoadServer(int port) {
-        this.port = port;
+    public JLoadServer(Configuration config) {
+        this.config = config;
     }
 
     public void start() {
@@ -30,8 +30,8 @@ public class JLoadServer implements Server {
             Log.info("Server already running!");
             return;
         }
-        try (ServerSocket server = new ServerSocket(port)) {
-            Log.info("JLoad Server started on port: %s", valueOf(port));
+        try (ServerSocket server = new ServerSocket(config.port())) {
+            Log.info("JLoad Server started on port: %s", valueOf(config.port()));
             running = true;
             while (running) {
                 handleClient(server.accept());
@@ -44,7 +44,7 @@ public class JLoadServer implements Server {
 
     private void handleClient(Socket socket) {
         startVirtualThread(() -> {
-            try (ClientHandler client = new SimpleClientHandler(INSTANCE.algoType(), socket)) {
+            try (ClientHandler client = new SimpleClientHandler(config, socket)) {
                 Log.debug("Client Connected - %s", client.id());
                 client.handle();
             } catch (IOException ex) {

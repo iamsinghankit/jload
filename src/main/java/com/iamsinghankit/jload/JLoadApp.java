@@ -51,7 +51,7 @@ public class JLoadApp {
             out.println(HELP_MSG);
             return;
         }
-        Server jload = new JLoadServer(config.port());
+        Server jload = new JLoadServer(config);
         jload.start();
     }
 

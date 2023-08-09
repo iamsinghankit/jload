@@ -1,6 +1,7 @@
 package com.iamsinghankit.jload.core.internal;
 
 import com.iamsinghankit.jload.core.ClientHandler;
+import com.iamsinghankit.jload.core.Configuration;
 import com.iamsinghankit.jload.logger.Log;
 
 import java.io.IOException;
@@ -20,8 +21,8 @@ class SimpleClientHandler implements ClientHandler {
     private final LoadBalancer loadBalancer;
     private Socket host;
 
-    public SimpleClientHandler(AlgoType algoType, Socket socket) {
-        this.loadBalancer = algoType.loadBalancer();
+    public SimpleClientHandler(Configuration config, Socket socket) {
+        this.loadBalancer = config.algoType().loadBalancer(config);
         this.socket = socket;
         this.id = generateId();
     }

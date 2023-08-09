@@ -9,13 +9,11 @@ import java.util.List;
 public record Configuration(int port, boolean debug, int retry, List<Host> hosts, boolean help, String version,
                             boolean versionRequested, AlgoType algoType) {
 
-    public static Configuration INSTANCE;
-
 
     public static Configuration setup(String... args) {
         int port = 8080, retry = 3;
         boolean debug = false, help = false, versionRequested = false;
-        List<Host> hosts = List.of(new Host("localhost", 9090));
+        var hosts = List.of(new Host("localhost", 9090));
         String version = "JLoad v" + Configuration.class.getPackage().getImplementationVersion();
         AlgoType algoType = AlgoType.ROUND;
 
@@ -32,8 +30,7 @@ public record Configuration(int port, boolean debug, int retry, List<Host> hosts
                 default -> throw new JLoadException("Invalid parameter: " + params[0]);
             }
         }
-        INSTANCE = new Configuration(port, debug, retry, hosts, help, version, versionRequested, algoType);
-        return INSTANCE;
+        return new Configuration(port, debug, retry, hosts, help, version, versionRequested, algoType);
     }
 
     private static AlgoType getAlgoType(String[] params) {
