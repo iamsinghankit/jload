@@ -13,7 +13,8 @@ import static java.lang.System.out;
  */
 public class JLoadApp {
     private static final String HELP_MSG = """
-            usage: jload [--port] [--debug] [--retry] [--hosts] [--algo] [--help] [--version]
+            JLoad is a simple TCP layer 4 highly performant load balancer.
+            usage: jload [options...]
             --port=,-p=    port on which jload will listen for connections.
                            default=8080
             --debug,-d     enable debugging.
