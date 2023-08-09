@@ -2,6 +2,7 @@ com/iamsinghankit/jload/core/Configuration.class
 com/iamsinghankit/jload/logger/SimpleConsoleLogger.class
 com/iamsinghankit/jload/core/internal/SimpleClientHandler.class
 com/iamsinghankit/jload/logger/Logger.class
+com/iamsinghankit/jload/core/internal/LeastConnectionLoadBalancer.class
 com/iamsinghankit/jload/core/internal/RandomLoadBalancer.class
 com/iamsinghankit/jload/core/internal/AlgoType$Lazy.class
 com/iamsinghankit/jload/core/internal/AbstractLoadBalancer.class

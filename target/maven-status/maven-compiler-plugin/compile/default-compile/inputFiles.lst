@@ -12,5 +12,6 @@
 /Users/ankitsingh/projects/github/iamsinghankit/jload/src/main/java/com/iamsinghankit/jload/core/Configuration.java
 /Users/ankitsingh/projects/github/iamsinghankit/jload/src/main/java/com/iamsinghankit/jload/core/internal/SimpleClientHandler.java
 /Users/ankitsingh/projects/github/iamsinghankit/jload/src/main/java/com/iamsinghankit/jload/logger/Logger.java
+/Users/ankitsingh/projects/github/iamsinghankit/jload/src/main/java/com/iamsinghankit/jload/core/internal/LeastConnectionLoadBalancer.java
 /Users/ankitsingh/projects/github/iamsinghankit/jload/src/main/java/com/iamsinghankit/jload/core/internal/RoundRobinLoadBalancer.java
 /Users/ankitsingh/projects/github/iamsinghankit/jload/src/main/java/com/iamsinghankit/jload/JLoadException.java

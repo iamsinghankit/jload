@@ -24,7 +24,7 @@ public class JLoadApp {
                        for more than one host use separator comma, other than comma
                        value will be ignored.
                        default=localhost:9090
-            --algo=    select algorithm for load balancing, possible values:[round,random].
+            --algo=    select algorithm for load balancing, possible values:[round,random,least_connection].
                        default=round
             --help     print this help message.
             --version  print current version.

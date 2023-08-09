@@ -11,7 +11,8 @@ import static com.iamsinghankit.jload.core.Configuration.INSTANCE;
  */
 public enum AlgoType {
     ROUND(new Lazy(() -> new RoundRobinLoadBalancer(INSTANCE.hosts(), INSTANCE.retry()))),
-    RANDOM(new Lazy(() -> new RandomLoadBalancer(INSTANCE.hosts(), INSTANCE.retry())));
+    RANDOM(new Lazy(() -> new RandomLoadBalancer(INSTANCE.hosts(), INSTANCE.retry()))),
+    LEAST_CONNECTION(new Lazy(() -> new LeastConnectionLoadBalancer(INSTANCE.hosts(), INSTANCE.retry())));
 
     private final Lazy lazyLoadBalancer;
 
@@ -23,6 +24,7 @@ public enum AlgoType {
         return switch (value) {
             case "round" -> ROUND;
             case "random" -> RANDOM;
+            case "least_connection"-> LEAST_CONNECTION;
             default -> throw new JLoadException("Invalid parameter value: " + value);
         };
     }
