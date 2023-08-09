@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.iamsinghankit</groupId>
+    <artifactId>jload</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+
+    <name>jload</name>
+    <url>https://github.com/iamsinghankit/jload</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compile.release>20</maven.compile.release>
+        <main.class>com.iamsinghankit.jload.JLoadApp</main.class>
+        <app.name>${artifactId}</app.name>
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>${maven.compile.release}</release>
+                    <enablePreview>true</enablePreview>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>${main.class}</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                    <finalName>${app.name}</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
