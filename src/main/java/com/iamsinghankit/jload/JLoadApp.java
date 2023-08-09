@@ -14,20 +14,21 @@ import static java.lang.System.out;
 public class JLoadApp {
     private static final String HELP_MSG = """
             usage: jload [--port] [--debug] [--retry] [--hosts] [--algo] [--help] [--version]
-            --port=    port on which jload will listen for connections.
-                       default=8080
-            --debug    enable debugging.
-                       default=false
-            --retry=   no, of retry attempt before treating as failure.
-                       default=3
-            --hosts=   list of hosts with port no for jload to balance,
-                       for more than one host use separator comma, other than comma
-                       value will be ignored.
-                       default=localhost:9090
-            --algo=    select algorithm for load balancing, possible values:[round,random,least_connection].
-                       default=round
-            --help     print this help message.
-            --version  print current version.
+            --port=,-p=    port on which jload will listen for connections.
+                           default=8080
+            --debug,-d     enable debugging.
+                           default=false
+            --retry=,-r=   no, of retry attempt before treating as failure.
+                           default=3
+            --hosts=       list of hosts with port no for jload to balance,
+                           for more than one host use separator comma, other than comma
+                           value will be ignored.
+                           default=localhost:9090
+            --algo=,-a=    select algorithm for load balancing,
+                           possible values:[round,random,least_connection].
+                           default=round
+            --help,-h      print this help message.
+            --version,-v   print current version.
             """;
 
     @SuppressWarnings("resource")

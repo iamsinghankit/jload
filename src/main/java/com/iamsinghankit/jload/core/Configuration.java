@@ -22,13 +22,13 @@ public record Configuration(int port, boolean debug, int retry, List<Host> hosts
         for (String arg : args) {
             String[] params = arg.split("=");
             switch (params[0]) {
-                case "--port" -> port = getValue("--port", params);
-                case "--debug" -> debug = true;
-                case "--retry" -> retry = getValue("--retry", params);
+                case "--port", "-p" -> port = getValue("--port,-p", params);
+                case "--debug", "-d" -> debug = true;
+                case "--retry", "-r" -> retry = getValue("--retry,-r", params);
                 case "--hosts" -> hosts = Host.of(params);
-                case "--help" -> help = true;
-                case "--algo" -> algoType = getAlgoType(params);
-                case "--version" -> versionRequested = true;
+                case "--help", "-h" -> help = true;
+                case "--algo", "-a" -> algoType = getAlgoType(params);
+                case "--version", "-v" -> versionRequested = true;
                 default -> throw new JLoadException("Invalid parameter: " + params[0]);
             }
         }
@@ -37,7 +37,7 @@ public record Configuration(int port, boolean debug, int retry, List<Host> hosts
     }
 
     private static AlgoType getAlgoType(String[] params) {
-        if (params.length != 2) throw new JLoadException("Invalid parameter --algo");
+        if (params.length != 2) throw new JLoadException("Invalid parameter --algo,-a");
         return AlgoType.of(params[1]);
     }
 
