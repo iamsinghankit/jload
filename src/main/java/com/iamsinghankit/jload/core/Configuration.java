@@ -1,12 +1,13 @@
 package com.iamsinghankit.jload.core;
 
 import com.iamsinghankit.jload.JLoadException;
+import com.iamsinghankit.jload.core.internal.AlgoType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public record Configuration(int port, boolean debug, int retry, List<Host> hosts, boolean help, String version,
-                            boolean versionRequested) {
+                            boolean versionRequested, AlgoType algoType) {
 
     public static Configuration INSTANCE;
 
@@ -16,6 +17,7 @@ public record Configuration(int port, boolean debug, int retry, List<Host> hosts
         boolean debug = false, help = false, versionRequested = false;
         List<Host> hosts = List.of(new Host("localhost", 9090));
         String version = "JLoad v" + Configuration.class.getPackage().getImplementationVersion();
+        AlgoType algoType = AlgoType.ROUND;
 
         for (String arg : args) {
             String[] params = arg.split("=");
@@ -25,12 +27,18 @@ public record Configuration(int port, boolean debug, int retry, List<Host> hosts
                 case "--retry" -> retry = getValue("--retry", params);
                 case "--hosts" -> hosts = Host.of(params);
                 case "--help" -> help = true;
+                case "--algo" -> algoType = getAlgoType(params);
                 case "--version" -> versionRequested = true;
                 default -> throw new JLoadException("Invalid parameter: " + params[0]);
             }
         }
-        INSTANCE = new Configuration(port, debug, retry, hosts, help, version, versionRequested);
+        INSTANCE = new Configuration(port, debug, retry, hosts, help, version, versionRequested, algoType);
         return INSTANCE;
+    }
+
+    private static AlgoType getAlgoType(String[] params) {
+        if (params.length != 2) throw new JLoadException("Invalid parameter --algo");
+        return AlgoType.of(params[1]);
     }
 
     private static int getValue(String param, String[] params) {

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static com.iamsinghankit.jload.core.Configuration.INSTANCE;
 import static java.lang.String.valueOf;
 import static java.lang.Thread.startVirtualThread;
 
@@ -43,7 +44,7 @@ public class JLoadServer implements Server {
 
     private void handleClient(Socket socket) {
         startVirtualThread(() -> {
-            try (ClientHandler client = new SimpleClientHandler(socket)) {
+            try (ClientHandler client = new SimpleClientHandler(INSTANCE.algoType(), socket)) {
                 Log.debug("Client Connected - %s", client.id());
                 client.handle();
             } catch (IOException ex) {

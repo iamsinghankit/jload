@@ -16,18 +16,12 @@ import static java.lang.Thread.startVirtualThread;
  * @author Ankit Singh
  */
 class SimpleClientHandler implements ClientHandler {
-    private static final LoadBalancer defaultLB = new RoundRobinLoadBalancer(INSTANCE.hosts(), INSTANCE.retry());
     private final Socket socket;
     private final String id;
     private final LoadBalancer loadBalancer;
 
-
-    public SimpleClientHandler(Socket socket) {
-        this(defaultLB, socket);
-    }
-
-    public SimpleClientHandler(LoadBalancer loadBalancer, Socket socket) {
-        this.loadBalancer = loadBalancer;
+    public SimpleClientHandler(AlgoType algoType, Socket socket) {
+        this.loadBalancer = algoType.loadBalancer();
         this.socket = socket;
         this.id = generateId();
     }
