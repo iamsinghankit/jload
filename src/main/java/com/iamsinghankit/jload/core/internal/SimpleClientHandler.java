@@ -37,7 +37,7 @@ class SimpleClientHandler implements ClientHandler {
             InputStream input = socket.getInputStream();
             OutputStream output = socket.getOutputStream();
             host = loadBalancer.nextHost();
-            Log.info("[%s] Forwarding request to: %s ", id, socket.toString());
+            Log.debug("[%s] Forwarding request to: %s ", id, socket.toString());
             var hostInput = host.getInputStream();
             var hostOutput = host.getOutputStream();
             Thread ipt = startVirtualThread(() -> transferTo(input, hostOutput));
