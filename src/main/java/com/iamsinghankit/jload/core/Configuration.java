@@ -2,35 +2,41 @@ package com.iamsinghankit.jload.core;
 
 import com.iamsinghankit.jload.JLoadException;
 import com.iamsinghankit.jload.core.internal.AlgoType;
+import lombok.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.iamsinghankit.jload.core.Configuration.Host.LOCAL_HOST;
+import static com.iamsinghankit.jload.core.internal.AlgoType.ROUND_ROBIN;
+
+@Builder
 public record Configuration(int port, boolean debug, int retry, List<Host> hosts, boolean help, String version,
                             boolean versionRequested, AlgoType algoType) {
 
 
     public static Configuration setup(String... args) {
-        int port = 8080, retry = 3;
-        boolean debug = false, help = false, versionRequested = false;
-        var hosts = List.of(new Host("localhost", 9090));
-        String version = "JLoad v" + Configuration.class.getPackage().getImplementationVersion();
-        AlgoType algoType = AlgoType.ROUND_ROBIN;
+        ConfigurationBuilder b = Configuration.builder()
+                .port(8080)
+                .retry(2)
+                .algoType(ROUND_ROBIN)
+                .hosts(List.of(LOCAL_HOST))
+                .version("JLoad v" + Configuration.class.getPackage().getImplementationVersion());
 
         for (String arg : args) {
             String[] params = arg.split("=");
             switch (params[0]) {
-                case "--port", "-p" -> port = getValue("--port,-p", params);
-                case "--debug", "-d" -> debug = true;
-                case "--retry", "-r" -> retry = getValue("--retry,-r", params);
-                case "--hosts" -> hosts = Host.of(params);
-                case "--help", "-h" -> help = true;
-                case "--algo", "-a" -> algoType = getAlgoType(params);
-                case "--version", "-v" -> versionRequested = true;
+                case "--port", "-p" -> b.port = getValue("--port,-p", params);
+                case "--debug", "-d" -> b.debug = true;
+                case "--retry", "-r" -> b.retry = getValue("--retry,-r", params);
+                case "--hosts" -> b.hosts = Host.of(params);
+                case "--help", "-h" -> b.help = true;
+                case "--algo", "-a" -> b.algoType = getAlgoType(params);
+                case "--version", "-v" -> b.versionRequested = true;
                 default -> throw new JLoadException("Invalid parameter: " + params[0]);
             }
         }
-        return new Configuration(port, debug, retry, hosts, help, version, versionRequested, algoType);
+        return b.build();
     }
 
     private static AlgoType getAlgoType(String[] params) {
@@ -44,6 +50,8 @@ public record Configuration(int port, boolean debug, int retry, List<Host> hosts
     }
 
     public record Host(String url, int port) {
+        final static Host LOCAL_HOST = new Host("localhost", 9090);
+
         static List<Host> of(String[] addresses) {
             if (addresses.length != 2) {
                 throw new JLoadException("Invalid parameter --hosts");

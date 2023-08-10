@@ -10,6 +10,7 @@ com/iamsinghankit/jload/JLoadException.class
 com/iamsinghankit/jload/core/Configuration$Host.class
 com/iamsinghankit/jload/core/internal/RoundRobinLoadBalancer.class
 com/iamsinghankit/jload/logger/Log.class
+com/iamsinghankit/jload/core/Configuration$ConfigurationBuilder.class
 module-info.class
 com/iamsinghankit/jload/core/ClientHandler.class
 com/iamsinghankit/jload/core/internal/JLoadServer.class
